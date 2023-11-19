@@ -1,0 +1,26 @@
+# Python 関連
+__pycache__/
+.python-version
+
+# fly
+fly.toml
+
+# 仮想環境
+.venv/
+
+# 開発ツール関連
+.vscode/
+*.log
+public/
+
+# Git関連
+.git/
+.gitignore
+
+# テストファイルやドキュメント
+test*.py
+docs/
+
+# OS生成ファイル
+.DS_Store
+Thumbs.db
