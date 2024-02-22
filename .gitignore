@@ -37,5 +37,5 @@ MANIFEST.in
 /releases/*
 pip-wheel-metadata
 /public
-test*.py
+/trash
 *.mp4
