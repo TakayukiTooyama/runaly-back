@@ -5,8 +5,8 @@ import numpy as np
 
 BODY_PARTS = [
     "Head",
-    # "REar",
-    # "LEar",
+    "REar",
+    "LEar",
     "RShoulder",
     "RElbow",
     "RWrist",
@@ -19,12 +19,10 @@ BODY_PARTS = [
     "LHip",
     "LKnee",
     "LAnkle",
-    "RBigToe",
-    "LBigToe",
-    # "RToe",
-    # "RHeel",
-    # "LToe",
-    # "LHeel",
+    "RToe",
+    "RHeel",
+    "LToe",
+    "LHeel",
 ]
 
 
@@ -161,11 +159,11 @@ def calc_cog(keypoints: Dict[str, List[List[float]]], frame: int) -> List[List[f
     """
     parts = [
         # 頭部の重心
-        # calc_part_cog(
-        #     keypoints["Head"][frame],
-        #     center_position(keypoints["REar"][frame], keypoints["LEar"][frame]),
-        #     0.821,
-        # ),
+        calc_part_cog(
+            keypoints["Head"][frame],
+            center_position(keypoints["REar"][frame], keypoints["LEar"][frame]),
+            0.821,
+        ),
         # 右上腕の重心
         calc_part_cog(keypoints["RShoulder"][frame], keypoints["RElbow"][frame], 0.529),
         # 左上腕の重心
@@ -190,10 +188,10 @@ def calc_cog(keypoints: Dict[str, List[List[float]]], frame: int) -> List[List[f
         calc_part_cog(keypoints["RKnee"][frame], keypoints["RAnkle"][frame], 0.406),
         # 左下腿の重心
         calc_part_cog(keypoints["LKnee"][frame], keypoints["LAnkle"][frame], 0.406),
-        # # 右足の重心
-        # calc_part_cog(keypoints["RHeel"][frame], keypoints["RToe"][frame], 0.011),
-        # # 左足の重心
-        # calc_part_cog(keypoints["LHeel"][frame], keypoints["LToe"][frame], 0.011),
+        # 右足の重心
+        calc_part_cog(keypoints["RHeel"][frame], keypoints["RToe"][frame], 0.011),
+        # 左足の重心
+        calc_part_cog(keypoints["LHeel"][frame], keypoints["LToe"][frame], 0.011),
     ]
 
     total_x = sum(part[0] for part in parts)
@@ -455,7 +453,7 @@ def process_analyze(
     keypoints_to_dict = convert_keypoints_to_dict(keypoints)
     convert_keypoint = convert_keypoints(keypoints)
 
-    # # 結果を格納するリスト
+    # 結果を格納するリスト
     cogs = []
     trunk_angles = []
     right_hip_flexion_angles = []
@@ -492,10 +490,8 @@ def process_analyze(
 
         # ステップ長
         step_length = calc_step_length(
-            # keypoints_to_dict["RHeel"][frame],
-            # keypoints_to_dict["LHeel"][frame],
-            keypoints_to_dict["RAnkle"][frame],
-            keypoints_to_dict["LAnkle"][frame],
+            keypoints_to_dict["RHeel"][frame],
+            keypoints_to_dict["LHeel"][frame],
             scale,
         )
         step_lengths.append(step_length)

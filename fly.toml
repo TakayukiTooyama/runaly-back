@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for runaly-running-analyze on 2024-02-18T20:26:58+09:00
+# fly.toml app configuration file generated for runaly-running-analyze on 2024-02-28T18:30:46+09:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -17,6 +17,6 @@ primary_region = 'nrt'
   processes = ['app']
 
 [[vm]]
-  memory = '2gb'
+  memory = '4gb'
   cpu_kind = 'shared'
-  cpus = 1
+  cpus = 2

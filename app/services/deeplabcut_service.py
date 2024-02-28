@@ -34,15 +34,15 @@ def extract_keypoints(
         raise HTTPException(status_code=400, detail="Unable to read video file")
 
     # 出力ビデオの設定
-    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
-    out = cv2.VideoWriter(
-        "./public/video/output_video.mp4",
-        cv2.VideoWriter_fourcc(*"mp4v"),
-        frame_rate,
-        (frame_width, frame_height),
-    )
+    # frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    # frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    # frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
+    # out = cv2.VideoWriter(
+    #     "./public/video/output_video.mp4",
+    #     cv2.VideoWriter_fourcc(*"mp4v"),
+    #     frame_rate,
+    #     (frame_width, frame_height),
+    # )
 
     keypoints = []
     ret, frame = cap.read()
@@ -52,7 +52,7 @@ def extract_keypoints(
         )
     tracker.init(frame, bbox_to_tuple(human_bbox))
     dlc_live.init_inference(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-    frame_index = 0
+    # frame_index = 0
 
     while ret:
         # フレームでオブジェクトを追跡
@@ -78,9 +78,9 @@ def extract_keypoints(
                 cv2.circle(frame, (int(kpt[0]), int(kpt[1])), 5, (0, 255, 0), -1)
 
             # 画像としてフレームを保存
-            cv2.imwrite(f"./public/image/wakui/frame_{frame_index}.png", frame)
-            frame_index += 1
-            out.write(frame)
+            # cv2.imwrite(f"./public/image/wakui/frame_{frame_index}.png", frame)
+            # frame_index += 1
+            # out.write(frame)
             # print(keypoints)
             # confidences = pose[:, 2]
             # for kpt, conf in zip(keypoints, confidences):
