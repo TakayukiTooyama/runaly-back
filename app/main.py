@@ -6,7 +6,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://runaly-front.vercel.app"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://runaly-front-ivory.vercel.app",
+        "https://runaly-front.vercel.app",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )

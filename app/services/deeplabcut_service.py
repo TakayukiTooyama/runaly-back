@@ -28,21 +28,10 @@ def extract_keypoints(
     Returns:
         _type_: _description_
     """
-    tracker = cv2.TrackerCSRT().create()
+    tracker = cv2.TrackerKCF().create()
     cap = cv2.VideoCapture(str(video_path))
     if not cap.isOpened():
         raise HTTPException(status_code=400, detail="Unable to read video file")
-
-    # 出力ビデオの設定
-    # frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    # frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    # frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
-    # out = cv2.VideoWriter(
-    #     "./public/video/output_video.mp4",
-    #     cv2.VideoWriter_fourcc(*"mp4v"),
-    #     frame_rate,
-    #     (frame_width, frame_height),
-    # )
 
     keypoints = []
     ret, frame = cap.read()
@@ -52,14 +41,13 @@ def extract_keypoints(
         )
     tracker.init(frame, bbox_to_tuple(human_bbox))
     dlc_live.init_inference(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-    # frame_index = 0
 
     while ret:
         # フレームでオブジェクトを追跡
         success, bbox = tracker.update(frame)
         if success:
             # トラッキング成功: バウンディングボックスを描画
-            (x, y, width, height) = [int(v) for v in bbox]
+            (x, y, width, height) = bbox
             # 拡張
             x = x - 80
             y = y - 80
@@ -72,20 +60,6 @@ def extract_keypoints(
             keypoint = np.floor(pose[:, :2]).tolist()
             adjusted_keypoints = [(kp[0] + x, kp[1] + y) for kp in keypoint]
             keypoints.append(adjusted_keypoints)
-            # バウンディングボックスとキーポイントを描画
-            cv2.rectangle(frame, (x, y), (x + width, y + height), (255, 0, 0), 2)
-            for kpt in adjusted_keypoints:
-                cv2.circle(frame, (int(kpt[0]), int(kpt[1])), 5, (0, 255, 0), -1)
-
-            # 画像としてフレームを保存
-            # cv2.imwrite(f"./public/image/wakui/frame_{frame_index}.png", frame)
-            # frame_index += 1
-            # out.write(frame)
-            # print(keypoints)
-            # confidences = pose[:, 2]
-            # for kpt, conf in zip(keypoints, confidences):
-            #     if conf > 0.5:
-            #         cv2.circle(frame, (int(kpt[0]), int(kpt[1])), 5, (0, 0, 255), -1)
         else:
             print("トラッキング失敗")
 
