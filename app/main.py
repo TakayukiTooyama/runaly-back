@@ -8,10 +8,10 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://runaly.vercel.app/",
-        "https://runaly-front.vercel.app",
+        "https://runaly.vercel.app",
     ],
-    allow_methods=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
